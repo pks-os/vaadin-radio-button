@@ -380,6 +380,29 @@
           done();
         }, 100);
       });
+
+      it('should set focused attribute on focusin event dispatched', () => {
+        vaadinRadioButtonList[0].dispatchEvent(new CustomEvent('focusin', {composed: true, bubbles: true}));
+        expect(vaadinRadioButtonGroup.hasAttribute('focused')).to.be.true;
+      });
+
+      it('should set focused attribute on radio-button focus', () => {
+        vaadinRadioButtonList[0].focus();
+        expect(vaadinRadioButtonGroup.hasAttribute('focused')).to.be.true;
+      });
+
+      it('should not set focused attribute on focusin event dispatched when disabled', () => {
+        vaadinRadioButtonGroup.disabled = true;
+        vaadinRadioButtonList[0].dispatchEvent(new CustomEvent('focusin', {composed: true, bubbles: true}));
+        expect(vaadinRadioButtonGroup.hasAttribute('focused')).to.be.false;
+      });
+
+      it('should remove focused attribute on radio-button blur', () => {
+        vaadinRadioButtonList[0].dispatchEvent(new CustomEvent('focusin', {composed: true, bubbles: true}));
+        vaadinRadioButtonList[0].blur();
+        expect(vaadinRadioButtonGroup.hasAttribute('focused')).to.be.false;
+      });
+
     });
 
     describe('radio-group-with-initial-checked-button', () => {
